@@ -18,6 +18,21 @@ module.exports = function(grunt) {
       dist: {
         src: 'lib/**/*.js',
         dest: 'dist/<%= pkg.name %>.js'
+      },
+      css: {
+        src: 'lib/**/*.css',
+        dest: 'dist/<%= pkg.name %>.css'
+      }
+    },
+    cssmin: {
+      dist: {
+        files: [{
+          expand: true,
+          cwd: 'dist',
+          src: ['*.css', '!*.min.css'],
+          dest: 'dist',
+          ext: '.min.css'
+        }]
       }
     },
     uglify: {
@@ -69,6 +84,7 @@ module.exports = function(grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-qunit');
@@ -80,8 +96,9 @@ module.exports = function(grunt) {
                       'jshint',
                       'qunit',
                       'concat',
-                      'uglify']);
-  
+                      'uglify',
+                      'cssmin']);
+
   grunt.registerTask('test', [
     'jshint'
   ]);
